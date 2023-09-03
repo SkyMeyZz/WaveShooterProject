@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using System;
 
 public class GameManager : NetworkBehaviour
 {
@@ -30,20 +31,17 @@ public class GameManager : NetworkBehaviour
         projectileNetworkObject.Spawn(true);
     }
 
-    /*public void SpawnProjectile(GameObject projectile, Vector3 position, Quaternion rotation)
+    public void DestroyProjectile(GameObject projectile)
     {
-        SpawnProjectileServerRpc(GetProjectileListSOIndex(projectile), position, rotation);
+        DestroyProjectileServerRpc(projectile.GetComponent<NetworkObject>());
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SpawnProjectileServerRpc(int index, Vector3 position, Quaternion rotation)
+    private void DestroyProjectileServerRpc(NetworkBehaviourReference projectileNetworkBehaviourReference)
     {
-        GameObject projectile = GetProjectileObjectFromIndex(index);
-
-        Instantiate(projectile, position, rotation);
-
+        projectileNetworkBehaviourReference.TryGet(out NetworkObject projectileNetworkObject);
         
-    }*/
+    }
 
     private int GetProjectileListSOIndex(GameObject projectile)
     {
